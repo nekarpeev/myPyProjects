@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ questions.question_text }}</h1>
+
+<ul>
+{% for choice in questions.choise_set.all %}
+    <li>{{ choice.choise_text }} -- {{ choice.vote }}(количество ответов)</li>
+{% endfor %}
+</ul>
+
+<a href="{% url 'polls:detail' questions.id %}">Выбрат еще вариант?</a>
+
+{% endblock %}

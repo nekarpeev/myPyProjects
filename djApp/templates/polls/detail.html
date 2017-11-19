@@ -1,11 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div>{{ question }}</div>
+{%  extends 'base.html' %}
 
-</body>
-</html>
+{% block content %}
+
+<h1>{{ questions.question_text }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'polls:vote' questions.id %}" method="post">
+{% csrf_token %}
+{% for choice in questions.choise_set.all %}
+    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
+    <label for="choice{{ forloop.counter }}">{{ choice.choise_text }}</label><br />
+{% endfor %}
+<input type="submit" value="Выбрать" />
+</form>
+
+{% endblock %}
